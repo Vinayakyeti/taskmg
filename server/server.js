@@ -15,8 +15,13 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(express.json()); // Parse JSON bodies
-app.use(cors()); // Enable CORS for all routes
+app.use(express.json());
+app.use(cors({
+    origin: process.env.NODE_ENV === 'production' 
+        ? ['https://taskmg.vercel.app', 'https://taskmg-git-main-vinayakyetis-projects.vercel.app', 'https://taskmg-vinayakyetis-projects.vercel.app']
+        : ['http://localhost:5173', 'http://localhost:5174'],
+    credentials: true
+}));
 
 // API Routes
 app.use('/api/auth', authRoutes);
